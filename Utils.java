@@ -1,15 +1,10 @@
 import java.io.*;
 import java.util.*;
 
-// helper functions for the project
-// implements the randomized order statistic (Rand-Select) from lecture
-// also randomized quicksort
-
 public class Utils {
 
     private static Random rng = new Random();
-
-    // read WhataburgerData.csv or StarbucksData.csv
+	
     // we support 2 layouts:
     //
     // Whataburger-style rows (7 columns):
@@ -96,7 +91,7 @@ public class Utils {
                 finalAddress = street;
             }
 
-            // normalize " - " -> ", " unless it's the John Peace Library one
+            // normalize " - " -> ", " unless it's the John Peace Library one (cause that one is annoying)
             if (finalAddress.contains(" - ")) {
                 if (!finalAddress.contains("John Peace Library")) {
                     finalAddress = finalAddress.replace(" - ", ", ");
@@ -112,12 +107,6 @@ public class Utils {
     }
 
     // read Queries.csv
-    // columns:
-    // 0 queryLat
-    // 1 queryLon
-    // 2 k
-    //
-    // assumes header row
     public static ArrayList<Query> readQueriesCSV(String filename) throws Exception {
         ArrayList<Query> list = new ArrayList<>();
 
@@ -157,8 +146,7 @@ public class Utils {
         arr.set(j, tmp);
     }
 
-    // randomized partition on distance
-    // puts pivot in final spot, everything <= pivot.dist on the left
+    // randomized partition on distance (puts pivot in final spot, everything <= pivot.dist on the left)
     private static int randPartition(ArrayList<Store> arr, int left, int right) {
         int pivotIndex = left + rng.nextInt(right - left + 1);
 
@@ -205,8 +193,7 @@ public class Utils {
         quickSort(arr, pivotIndex + 1, right);
     }
 
-    // collect all stores with distance <= kthDist
-    // (keeps ties, we will only print first k lines anyway)
+    // collect all stores with distance <= kthDist (keeps ties, we will only print first k lines anyway)
     public static ArrayList<Store> collectWithin(ArrayList<Store> allStores, double kthDist) {
         ArrayList<Store> res = new ArrayList<>();
         for (Store s : allStores) {
@@ -216,7 +203,8 @@ public class Utils {
         }
         return res;
     }
-    
+
+	// sorts by distance and alphabetically
     public static void sortByDistanceThenPrintable(ArrayList<Store> arr) {
 	    Collections.sort(arr, new Comparator<Store>() {
 		    @Override
